@@ -14,5 +14,5 @@ app.use('/payments-api', router);
 app.set('stripe', stripe);
 
 app.listen(PORT, () => {
-  console.log(`[PAYMENTS HANDLER] Serveur démarré sur le port ${PORT}`);
+  console.info(`[PAYMENTS HANDLER] Serveur démarré sur le port ${PORT}`);
 });
