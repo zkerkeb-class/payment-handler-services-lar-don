@@ -13,16 +13,20 @@ exports.createCustomer = async (req, res) => {
   }
 };
 
-// Charge a customer
-exports.chargeCustomer = async (req, res) => {
-  const { customerId, amount, currency } = req.body;
+exports.createCustomerSession = async (req, res) => {
+  const stripe = req.app.get('stripe');
+
   try {
-    const paymentIntent = await stripe.paymentIntents.create({
-      amount: amount,
-      currency: currency,
-      customer: customerId,
+    const customerSession = await stripe.customerSessions.create({
+      customer: req.body.stripeId,
+      components: {
+        pricing_table: {
+          enabled: true,
+        },
+      },
     });
-    res.json(paymentIntent);
+
+    res.json(customerSession.client_secret);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
