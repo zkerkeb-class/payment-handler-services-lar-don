@@ -1,10 +1,10 @@
-const { stripeInstance } = require('.');
-
 // Create a new customer
 exports.createCustomer = async (req, res) => {
   const { email } = req.body;
+  const stripe = req.app.get('stripe');
+
   try {
-    const customer = await stripeInstance.customers.create({
+    const customer = await stripe.customers.create({
       email,
     });
     res.json(customer.id);
@@ -17,7 +17,7 @@ exports.createCustomer = async (req, res) => {
 exports.chargeCustomer = async (req, res) => {
   const { customerId, amount, currency } = req.body;
   try {
-    const paymentIntent = await stripeInstance.paymentIntents.create({
+    const paymentIntent = await stripe.paymentIntents.create({
       amount: amount,
       currency: currency,
       customer: customerId,
