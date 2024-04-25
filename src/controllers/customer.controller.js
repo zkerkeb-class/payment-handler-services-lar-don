@@ -42,7 +42,6 @@ exports.getSubscription = async (req, res) => {
     });
 
     const product = subscription?.data?.[0]?.items?.data?.[0]?.price?.product;
-    console.log(product);
     if (!product) {
       return res.json({ name: 'Plan de démarrage' });
     }
