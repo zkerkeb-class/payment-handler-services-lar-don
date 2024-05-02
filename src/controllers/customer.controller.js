@@ -40,7 +40,6 @@ exports.getSubscription = async (req, res) => {
     const subscription = await stripe.subscriptions.list({
       customer,
     });
-    console.log(subscription);
     const product = subscription?.data?.[0]?.items?.data?.[0]?.price?.product;
     const isPaymentNotDone = subscription?.data?.[0]?.status === 'incomplete';
     if (!product || isPaymentNotDone) {
